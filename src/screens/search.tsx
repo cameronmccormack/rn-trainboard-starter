@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Linking, SafeAreaView, StyleSheet, View } from 'react-native';
 import { Text, Button, Surface } from 'react-native-paper';
 import DropDown from 'react-native-paper-dropdown';
+import { openURL } from '../helpers/urlHelper';
 
 import { ScreenNavigationProps } from '../routes';
 
@@ -36,23 +37,27 @@ const styles = StyleSheet.create({
 
 const stations = [
   {
-    label: 'ZKX',
-    value: 'ZKX',
+    label: 'London Liverpool Street',
+    value: 'LST',
   },
   {
-    label: 'EDB',
+    label: 'London Kings Cross',
+    value: 'KGX',
+  },
+  {
+    label: 'Edinburgh Waverley',
     value: 'EDB',
   },
   {
-    label: 'CBG',
+    label: 'Cambridge',
     value: 'CBG',
   },
   {
-    label: 'GLW',
+    label: 'Glasgow Main Station',
     value: 'GLW',
   },
   {
-    label: 'MAN',
+    label: 'Manchester Picadilly',
     value: 'MAN',
   },
 ];
@@ -97,13 +102,20 @@ const SearchScreen: React.FC<SearchScreenProps> = ({ navigation }) => {
           list={stations}
         />
         <View style={styles.spacerStyle} />
-        <Button mode="contained" onPress={() => navigation.navigate('Details')}>
+        <Button
+          mode="contained"
+          // eslint-disable-next-line @typescript-eslint/no-misused-promises
+          onPress={() =>
+            openURL(
+              `https://www.lner.co.uk/travel-information/travelling-now/live-train-times/depart/${selectedDepartureItem}/${selectedArrivalItem}/#LiveDepResults`,
+            )
+          }
+        >
           Select Journey
         </Button>
       </SafeAreaView>
     </Surface>
   );
 };
-
 
 export default SearchScreen;
